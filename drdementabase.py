@@ -5,7 +5,6 @@ and a simple main() that walks a directory of show HTML files producing a
 DataFrame of tracks and first air dates.
 """
 
-import unittest
 import pandas as pd
 import re
 from dateutil import parser
@@ -249,19 +248,13 @@ def main():
     return results
 
 
-class MyTestCase(unittest.TestCase):
-    def test_something(self):
-        results = main()
-        rows = []
-        for title in results.keys():
-            for artist in results[title].keys():
-                rows.append(results[title][artist])
-        df = pd.DataFrame(rows, index=None)
-        print(df)
-        df.to_excel("drdementabase.xlsx", index=False)
-
-        # pprint(results)
-
-
 if __name__ == "__main__":
-    unittest.main()
+    results = main()
+    rows = []
+    for title in results.keys():
+        for artist in results[title].keys():
+            rows.append(results[title][artist])
+    df = pd.DataFrame(rows, index=None)
+    filename = "drdementabase.xlsx"
+    df.to_excel(filename, index=False)
+    print(f"Wrote {len(df)} tracks to {filename}")
